@@ -1,0 +1,28 @@
+import { test, expect } from "vitest";
+import { Cache } from "./pokecache.js";
+
+test.concurrent.each([
+    {
+        key: "https://example.com",
+        val: "testdata",
+        interval: 500,
+    },
+    {
+        key: "https://example.com/path",
+        val: "moretestdata",
+        interval: 1000,
+    },
+])("Test Caching $interval ms", async ({key, val, interval}) => {
+    const cache = new Cache(interval);
+
+    cache.add<string>(key, val);
+    const cached = cache.get(key);
+    expect(cached?.val).toBe(val);
+
+    await new Promise((resolve) => setTimeout(resolve, interval * 2));
+
+    const reaped = cache.get(key);
+    expect(reaped).toBe(undefined);
+
+    cache.stopReapLoop();
+})
