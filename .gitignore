@@ -1,4 +1,3 @@
 node_modules/
 dist/
 repl.log
-package-lock.json
