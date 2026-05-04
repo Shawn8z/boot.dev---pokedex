@@ -1,2 +1,3 @@
-Guided project from boot.dev /n
+Guided project from boot.dev.
+
 A REPL calls PokéAPI from user command
